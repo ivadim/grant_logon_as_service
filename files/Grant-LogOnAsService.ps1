@@ -27,14 +27,12 @@ if(Test-Path $infFile)
 }
 
 secedit /export /areas USER_RIGHTS /cfg $currentConfig
+$currentUsers = @()
 $permissions_string = get-content $currentConfig | select-string -pattern "SeServiceLogonRight" | Select-Object -ExpandProperty Line
 if ($permissions_string -ne $null) 
 {
    $key, $u = $permissions_string.Split("=", 2)
-   $currentUsers = $u.Split(",") | % { $_.Trim() }
-} else 
-{
-    $currentUsers = @()
+   $u.Split(",") | % { $currentUsers += $_.Trim() }
 }
 
 $objUser = New-Object System.Security.Principal.NTAccount($userDomain, $userAlias)

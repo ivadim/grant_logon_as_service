@@ -4,14 +4,16 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- azure-pipelines
 
 pr:
-- master
+- azure-pipelines
 
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  - group: TestGroup
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
@@ -19,4 +21,5 @@ steps:
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
+    echo $(test)
   displayName: 'Run a multi-line script'
